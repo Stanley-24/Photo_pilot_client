@@ -1,0 +1,114 @@
+import { Box, Typography, Button, Card, CardContent } from "@mui/material";
+import feature1 from "../assets/featured1.jpg";
+import feature2 from "../assets/featured2.jpg";
+import feature3 from "../assets/featured3.jpg";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
+import InsightsIcon from "@mui/icons-material/Insights";
+
+const features = [
+  {
+    title: "AI-Powered Editing",
+    description:
+      "Save hours of manual work with smart tools that auto-retouch, enhance, and organize your photos.",
+    image: feature1,
+    icon: <AutoFixHighIcon fontSize="large" color="primary" />,
+    buttonText: "Try Editing",
+    bg: "#ffffff",
+  },
+  {
+    title: "Smart Portfolio Builder",
+    description:
+      "Create stunning portfolios with one click using our design templates and cloud sync.",
+    image: feature2,
+    icon: <DashboardCustomizeIcon fontSize="large" color="primary" />,
+    buttonText: "Build Portfolio",
+    bg: "#f9f9f9",
+  },
+  {
+    title: "Market Insights",
+    description:
+      "Know what sells, where to sell it, and how to price with real-time data from global marketplaces.",
+    image: feature3,
+    icon: <InsightsIcon fontSize="large" color="primary" />,
+    buttonText: "Explore Insights",
+    bg: "#f0f0f0",
+  },
+];
+
+export default function Features() {
+  return (
+    <Box
+      id="features"
+      sx={{
+        px: { xs: 2, md: 4 },
+        py: 6,
+        backgroundColor: "#fafafa",
+      }}
+    >
+      {features.map((feature, index) => {
+        const isEven = index % 2 !== 0;
+        const isLast = index === features.length - 1;
+
+        return (
+          <Card
+            key={index}
+            sx={{
+              display: "flex",
+              flexDirection: {
+                xs: "column",
+                md: isEven ? "row-reverse" : "row",
+              },
+              mb: isLast ? 0 : 4, // ✅ No bottom margin on last card
+              borderRadius: 3,
+              boxShadow: 3,
+              overflow: "hidden",
+              backgroundColor: feature.bg,
+            }}
+          >
+            {/* Image */}
+            <Box sx={{ position: "relative", width: { xs: "100%", md: "40%" } }}>
+              <Box
+                component="img"
+                src={feature.image}
+                alt={feature.title}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  maxHeight: 280,
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4))",
+                }}
+              />
+            </Box>
+
+            {/* Content */}
+            <CardContent sx={{ flex: 1, p: { xs: 2, md: 3 } }}>
+              <Box sx={{ mb: 1 }}>{feature.icon}</Box>
+              <Typography variant="h6" fontWeight={600} gutterBottom>
+                {feature.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                {feature.description}
+              </Typography>
+              <Button variant="outlined" size="small">
+                {feature.buttonText}
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </Box>
+  );
+}
