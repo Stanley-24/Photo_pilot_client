@@ -1,8 +1,21 @@
-// components/CTA.jsx
-import { Box, Typography, Button, Card, CardContent, Stack } from "@mui/material";
-import backgroundImage from "../assets/cta-bg1.jpg"; // 🔁 Replace with your preferred background
+// src/sections/CTA.jsx
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  useTheme,
+} from "@mui/material";
+import backgroundImage from "../assets/cta-bg1.jpg"; // Your preferred background
+import { useNavigate } from "react-router-dom";
 
 export default function CTA() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -20,12 +33,14 @@ export default function CTA() {
         zIndex: 1,
       }}
     >
-      {/* Optional overlay for softening */}
+      {/* Theme-based overlay */}
       <Box
         sx={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(255, 255, 255, 0.45)",
+          backgroundColor: isDark
+            ? "rgba(0, 0, 0, 0.4)"
+            : "rgba(255, 255, 255, 0.45)",
           zIndex: 2,
         }}
       />
@@ -40,7 +55,8 @@ export default function CTA() {
           borderRadius: 4,
           p: { xs: 4, md: 6 },
           boxShadow: 4,
-          backgroundColor: "#ffffff",
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.text.primary,
         }}
       >
         <CardContent>
@@ -48,14 +64,29 @@ export default function CTA() {
             Ready to Elevate Your Photography?
           </Typography>
           <Typography variant="body1" color="text.secondary" mb={4}>
-            Join thousands of creators using our smart tools to edit, sell, and grow. It’s free to start.
+            Join thousands of creators using our smart tools to edit, sell, and
+            grow. It’s free to start.
           </Typography>
 
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="center">
-            <Button variant="contained" size="large" color="primary">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            justifyContent="center"
+          >
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={() => navigate("/auth")}
+            >
               Get Started Free
             </Button>
-            <Button variant="outlined" size="large" color="primary">
+            <Button
+              variant="outlined"
+              size="large"
+              color="primary"
+              onClick={() => navigate("/auth")}
+            >
               Book a Demo
             </Button>
           </Stack>

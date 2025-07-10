@@ -12,8 +12,14 @@ import {
   ListItemButton,
   ListItemText,
   useMediaQuery,
+  Tooltip,
 } from "@mui/material";
+
 import MenuIcon from "@mui/icons-material/Menu";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const navItems = [
   { label: "Features", href: "#features" },
@@ -23,7 +29,7 @@ const navItems = [
   { label: "Pricing", href: "#pricing" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ hideHamburger = false, darkMode, toggleDarkMode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -40,7 +46,6 @@ export default function Navbar() {
     if (isMobile) setMobileOpen(false);
   };
 
-  // ✅ Improved scroll spy
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY + 150;
@@ -62,7 +67,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial run
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -72,7 +77,7 @@ export default function Navbar() {
         key={item.label}
         onClick={() => handleSmoothScroll(item.href)}
         sx={{
-          color: activeSection === item.href ? "primary.main" : "#000",
+          color: activeSection === item.href ? "primary.main" : "text.primary",
           fontWeight: activeSection === item.href ? 700 : 400,
           textTransform: "none",
         }}
@@ -99,7 +104,11 @@ export default function Navbar() {
           </ListItem>
         ))}
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/login" sx={{ textAlign: "center" }}>
+          <ListItemButton
+            component={RouterLink}
+            to="/auth"
+            sx={{ textAlign: "center" }}
+          >
             <ListItemText primary="Login" />
           </ListItemButton>
         </ListItem>
@@ -118,8 +127,17 @@ export default function Navbar() {
           {!isMobile && (
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {renderNavLinks()}
+
+              {/* 🌙 Dark mode toggle */}
+              <Tooltip title={darkMode ? "Switch to light mode" : "Switch to dark mode"}>
+                <IconButton onClick={toggleDarkMode}>
+                  {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+              </Tooltip>
+
               <Button
-                href="/login"
+                component={RouterLink}
+                to="/auth"
                 variant="outlined"
                 size="small"
                 sx={{ textTransform: "none" }}
@@ -129,15 +147,17 @@ export default function Navbar() {
             </Box>
           )}
 
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerToggle}
-            sx={{ display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {!hideHamburger && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={handleDrawerToggle}
+              sx={{ display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
 

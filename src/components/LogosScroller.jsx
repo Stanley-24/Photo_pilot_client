@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import adobe from "../assets/logo-adobe.png";
 import canva from "../assets/logo-canva.png";
 import lightroom from "../assets/logo-lightroom.png";
@@ -11,14 +11,23 @@ import pexels from "../assets/logo-pexels.png";
 const logos = [adobe, canva, lightroom, pixieset, photoshop, unsplash, behance, pexels];
 
 export default function Logos() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
-    <Box sx={{ backgroundColor: "#fff", py: 6, position: "relative" }}>
+    <Box
+      sx={{
+        backgroundColor: "#fff", // Always light background
+        py: 6,
+        position: "relative",
+      }}
+    >
       <Typography
-        variant="h6"
-        fontWeight={600}
+        variant="h5"
+        fontWeight={700}
         textAlign="center"
         mb={3}
-        color="text.secondary"
+        color="#000" // Force black text even in dark mode
       >
         Trusted and Used by
       </Typography>
@@ -57,7 +66,7 @@ export default function Logos() {
             width: "fit-content",
             "@keyframes scroll": {
               "0%": { transform: "translateX(0%)" },
-              "100%": { transform: "translateX(-50%)" }, // Move half, then loop
+              "100%": { transform: "translateX(-50%)" },
             },
           }}
         >
@@ -71,8 +80,10 @@ export default function Logos() {
                 height: 40,
                 opacity: 0.7,
                 transition: "opacity 0.3s",
+                filter: isDark ? "brightness(0.8)" : "none",
                 "&:hover": {
                   opacity: 1,
+                  filter: isDark ? "brightness(1)" : "none",
                 },
               }}
             />

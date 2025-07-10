@@ -1,15 +1,17 @@
-// src/sections/Contact.jsx
 import {
   Box,
   Typography,
   Container,
   TextField,
   Button,
-  Grid,
   Paper,
+  useTheme,
 } from "@mui/material";
 
 export default function Contact() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
     <Box
       id="contact"
@@ -17,15 +19,32 @@ export default function Contact() {
         pt: 10,
         pb: 0,
         mb: 0,
-        backgroundColor: "#f9fafb",
+        backgroundColor: isDark ? theme.palette.background.default : "#f9fafb",
       }}
     >
       <Container maxWidth="sm">
-        <Typography variant="h3" fontWeight={700} textAlign="center" mb={6}>
+        <Typography
+          variant="h3"
+          fontWeight={700}
+          textAlign="center"
+          mb={6}
+          color={isDark ? "#fff" : "text.primary"}
+        >
           Get in Touch
         </Typography>
 
-        <Paper elevation={3} sx={{ p: 5, borderRadius: 3 }}>
+        <Paper
+          elevation={3}
+          sx={{
+            p: 5,
+            borderRadius: 3,
+            backgroundColor: isDark ? "#1a1a1a" : "#fff",
+            color: isDark ? "#fff" : "inherit",
+            boxShadow: isDark
+              ? "0 4px 12px rgba(0, 0, 0, 0.4)"
+              : "0 4px 12px rgba(0, 0, 0, 0.05)",
+          }}
+        >
           <form>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
               <TextField
@@ -33,6 +52,12 @@ export default function Contact() {
                 fullWidth
                 required
                 size="medium"
+                InputLabelProps={{ style: { color: isDark ? "#ccc" : undefined } }}
+                InputProps={{
+                  style: {
+                    color: isDark ? "#fff" : undefined,
+                  },
+                }}
               />
               <TextField
                 label="Email"
@@ -40,6 +65,12 @@ export default function Contact() {
                 fullWidth
                 required
                 size="medium"
+                InputLabelProps={{ style: { color: isDark ? "#ccc" : undefined } }}
+                InputProps={{
+                  style: {
+                    color: isDark ? "#fff" : undefined,
+                  },
+                }}
               />
               <TextField
                 label="Message"
@@ -48,6 +79,12 @@ export default function Contact() {
                 fullWidth
                 required
                 size="medium"
+                InputLabelProps={{ style: { color: isDark ? "#ccc" : undefined } }}
+                InputProps={{
+                  style: {
+                    color: isDark ? "#fff" : undefined,
+                  },
+                }}
               />
 
               <Button

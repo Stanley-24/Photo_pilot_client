@@ -10,6 +10,7 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  useTheme,
 } from "@mui/material";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -71,6 +72,7 @@ const defaultReviews = [
 ];
 
 export default function Reviews() {
+  const theme = useTheme();
   const sliderRef = useRef(null);
   const [reviews, setReviews] = useState(defaultReviews);
   const [showForm, setShowForm] = useState(false);
@@ -149,7 +151,15 @@ export default function Reviews() {
   };
 
   return (
-    <Box id="reviews" sx={{ px: { xs: 2, md: 6 }, py: 10, backgroundColor: "#f8fafc" }}>
+    <Box
+      id="reviews"
+      sx={{
+        px: { xs: 2, md: 6 },
+        py: 10,
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
+      }}
+    >
       <Typography
         variant="h4"
         fontWeight={700}
@@ -180,7 +190,7 @@ export default function Reviews() {
                 p: 3,
                 borderRadius: 3,
                 boxShadow: 3,
-                backgroundColor: "#fff",
+                backgroundColor: theme.palette.background.paper,
                 transition: "all 0.3s ease",
                 ":hover": {
                   boxShadow: 6,
@@ -191,7 +201,9 @@ export default function Reviews() {
               <CardContent>
                 <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 2 }}>
                   <Avatar src={review.avatar} alt={review.name} sx={{ width: 56, height: 56 }} />
-                  <Typography variant="subtitle1" fontWeight={600}>{review.name}</Typography>
+                  <Typography variant="subtitle1" fontWeight={600}>
+                    {review.name}
+                  </Typography>
                 </Box>
                 <Typography
                   variant="body2"
@@ -219,13 +231,7 @@ export default function Reviews() {
 
       {/* Add Review Form */}
       {showForm && (
-        <Box
-          mt={6}
-          maxWidth={500}
-          mx="auto"
-          component="form"
-          onSubmit={handleSubmit}
-        >
+        <Box mt={6} maxWidth={500} mx="auto" component="form" onSubmit={handleSubmit}>
           <Typography variant="h5" fontWeight={600} textAlign="center" mb={3}>
             Write a Review
           </Typography>

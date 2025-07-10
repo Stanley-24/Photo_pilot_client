@@ -1,17 +1,17 @@
-// components/Pricing.jsx
 import {
   Box,
   Typography,
   Card,
-  CardContent,
   Button,
   Grid,
   Chip,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 const pricingData = {
@@ -64,8 +64,17 @@ const pricingData = {
 };
 
 export default function Pricing() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const navigate = useNavigate();
   const [billing, setBilling] = useState("monthly");
   const plans = pricingData[billing];
+
+  const handleRedirect = (planName) => {
+    if (planName === "Free") navigate("/auth");
+    else if (planName === "Pro") navigate("/pricing/pro");
+    else if (planName === "Business") navigate("/contact");
+  };
 
   return (
     <Box
@@ -73,7 +82,9 @@ export default function Pricing() {
       sx={{
         py: 10,
         px: { xs: 2, md: 6 },
-        background: "linear-gradient(135deg, #f8fafc, #e0f2fe)",
+        background: isDark
+          ? theme.palette.background.default
+          : "linear-gradient(135deg, #f8fafc, #e0f2fe)",
       }}
     >
       <Typography variant="h4" fontWeight={700} textAlign="center" gutterBottom>
@@ -83,7 +94,6 @@ export default function Pricing() {
         Start for free. Upgrade when you're ready.
       </Typography>
 
-      {/* Toggle Billing */}
       <Stack direction="row" justifyContent="center" mb={6}>
         <ToggleButtonGroup
           value={billing}
@@ -97,16 +107,18 @@ export default function Pricing() {
         </ToggleButtonGroup>
       </Stack>
 
-      {/* Cards */}
       <Grid container spacing={4} justifyContent="center">
         {plans.map((plan, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
             <Card
               sx={{
                 p: 4,
-                boxShadow: plan.highlight ? 6 : 2,
                 borderRadius: 4,
-                border: plan.highlight ? "2px solid #1976d2" : "1px solid #ddd",
+                backgroundColor: isDark ? theme.palette.background.paper : "#fff",
+                border: plan.highlight
+                  ? `2px solid ${theme.palette.primary.main}`
+                  : `1px solid ${isDark ? "#444" : "#ddd"}`,
+                boxShadow: plan.highlight ? 6 : 2,
                 transform: plan.highlight ? "scale(1.03)" : "none",
                 transition: "0.3s",
               }}
@@ -126,7 +138,6 @@ export default function Pricing() {
                 <Typography variant="h4" fontWeight={800} color="primary">
                   {plan.price}
                 </Typography>
-
                 <Box>
                   {plan.features.map((feat, i) => (
                     <Typography key={i} variant="body2" color="text.secondary" mb={0.5}>
@@ -134,12 +145,12 @@ export default function Pricing() {
                     </Typography>
                   ))}
                 </Box>
-
                 <Button
                   variant={plan.highlight ? "contained" : "outlined"}
                   color="primary"
                   size="medium"
                   fullWidth
+                  onClick={() => handleRedirect(plan.name)}
                 >
                   {plan.buttonText}
                 </Button>

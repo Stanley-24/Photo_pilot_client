@@ -1,3 +1,10 @@
 html {
   scroll-behavior: smooth;
 }
+
+
+
+.MuiSvgIcon-root {
+  color: red !important;
+  display: none;
+}

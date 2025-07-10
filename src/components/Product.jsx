@@ -1,4 +1,3 @@
-// src/sections/Product.jsx
 import {
   Box,
   Typography,
@@ -7,6 +6,7 @@ import {
   Card,
   CardContent,
   Slide,
+  useTheme,
 } from "@mui/material";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
@@ -16,27 +16,30 @@ const features = [
   {
     title: "Smart Galleries",
     description: "Deliver galleries that are fast, responsive, and beautifully designed.",
-    icon: <CollectionsIcon sx={{ fontSize: 40, color: "#fff" }} />,
+    icon: <CollectionsIcon sx={{ fontSize: 40 }} />,
   },
   {
     title: "Auto-Tagging",
     description: "Let AI auto-organize and tag your photos for lightning-fast sorting.",
-    icon: <AutoAwesomeIcon sx={{ fontSize: 40, color: "#fff" }} />,
+    icon: <AutoAwesomeIcon sx={{ fontSize: 40 }} />,
   },
   {
     title: "Client Proofing",
     description: "Get client feedback directly on photos with one-click approvals.",
-    icon: <ThumbUpAltIcon sx={{ fontSize: 40, color: "#fff" }} />,
+    icon: <ThumbUpAltIcon sx={{ fontSize: 40 }} />,
   },
 ];
 
 export default function Product() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   return (
     <Box
       id="product"
       sx={{
         py: { xs: 8, md: 12 },
-        backgroundColor: "#f9fafb",
+        backgroundColor: theme.palette.background.default,
         scrollMarginTop: "100px",
       }}
     >
@@ -45,6 +48,7 @@ export default function Product() {
           variant="h3"
           fontWeight={700}
           textAlign="center"
+          color="text.primary"
           mb={{ xs: 6, md: 8 }}
         >
           Explore the Product
@@ -66,14 +70,18 @@ export default function Product() {
                     height: "100%",
                     p: 3,
                     borderRadius: 4,
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-                    background: "rgba(255,255,255,0.9)",
+                    boxShadow: isDark
+                      ? "0 8px 24px rgba(0,0,0,0.4)"
+                      : "0 8px 24px rgba(0,0,0,0.08)",
+                    backgroundColor: theme.palette.background.paper,
                     backdropFilter: "blur(6px)",
                     transition: "all 0.3s ease",
-                    mx: "auto", // Center the card horizontally
+                    mx: "auto",
                     maxWidth: 320,
                     ":hover": {
-                      boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+                      boxShadow: isDark
+                        ? "0 12px 30px rgba(0,0,0,0.5)"
+                        : "0 12px 30px rgba(0,0,0,0.12)",
                       transform: "translateY(-5px)",
                     },
                   }}
@@ -93,7 +101,7 @@ export default function Product() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        background: "linear-gradient(135deg, #3f51b5, #2196f3)",
+                        background: `linear-gradient(135deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                         borderRadius: "50%",
                         mb: 3,
                       }}
@@ -106,6 +114,7 @@ export default function Product() {
                       fontWeight={600}
                       gutterBottom
                       sx={{ fontSize: { xs: "1.1rem", md: "1.25rem" } }}
+                      color="text.primary"
                     >
                       {feature.title}
                     </Typography>
@@ -131,6 +140,7 @@ export default function Product() {
             fontWeight={600}
             mb={2}
             sx={{ fontSize: { xs: "1.2rem", md: "1.5rem" } }}
+            color="text.primary"
           >
             Ready to simplify your photography workflow?
           </Typography>
@@ -140,11 +150,11 @@ export default function Product() {
           </Typography>
 
           <Box>
-            <a href="/signup" style={{ textDecoration: "none" }}>
+            <a href="/auth" style={{ textDecoration: "none" }}>
               <Box
                 component="button"
                 sx={{
-                  background: "linear-gradient(90deg, #3f51b5, #2196f3)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
                   color: "#fff",
                   fontWeight: 600,
                   px: 4,

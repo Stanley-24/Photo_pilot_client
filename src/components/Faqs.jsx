@@ -10,6 +10,7 @@ import {
   TextField,
   Fab,
   Zoom,
+  useTheme,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
@@ -79,6 +80,9 @@ const faqsData = [
 ];
 
 export default function Faqs() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   const [search, setSearch] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -105,8 +109,8 @@ export default function Faqs() {
       id="faqs"
       sx={{
         py: { xs: 6, md: 10 },
-        backgroundColor: "#f9fafb",
-        borderTop: "1px solid #e5e7eb",
+        backgroundColor: isDark ? theme.palette.background.default : "#f9fafb",
+        borderTop: `1px solid ${isDark ? "#333" : "#e5e7eb"}`,
         position: "relative",
       }}
     >
@@ -121,7 +125,7 @@ export default function Faqs() {
             maxWidth: 320,
             mx: "auto",
             display: "block",
-            mb: 0, // removed bottom margin
+            mb: 0,
           }}
         />
 
@@ -141,9 +145,10 @@ export default function Faqs() {
             sx={{
               maxWidth: 400,
               mx: "auto",
-              backgroundColor: "#fff",
+              backgroundColor: isDark ? "#1e1e1e" : "#fff",
               mt: 2,
               borderRadius: 1,
+              input: { color: isDark ? "#fff" : "inherit" },
             }}
           />
         </Box>
@@ -162,19 +167,17 @@ export default function Faqs() {
               <Accordion
                 disableGutters
                 sx={{
-                  mb: 0, // removed bottom margin
+                  mb: 0,
                   borderRadius: 2,
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+                  backgroundColor: isDark ? "#1a1a1a" : "#fff",
+                  color: isDark ? "#fff" : "inherit",
+                  boxShadow: isDark
+                    ? "0 2px 6px rgba(0,0,0,0.4)"
+                    : "0 2px 6px rgba(0,0,0,0.05)",
                 }}
               >
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <HelpOutlineIcon
                       sx={{
                         fontSize: 18,

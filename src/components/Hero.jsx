@@ -8,17 +8,23 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useNavigate } from "react-router-dom"; // ✅ Import router navigation
 import heroImage from "../assets/home-bg.png";
 
 export default function Hero() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate(); // ✅ Router navigation hook
 
   const handleScroll = () => {
     const nextSection = document.getElementById("features");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleGetStarted = () => {
+    navigate("/auth"); // ✅ Redirect to your auth route
   };
 
   return (
@@ -36,7 +42,7 @@ export default function Hero() {
         backgroundAttachment: isMobile ? "scroll" : "fixed",
         px: { xs: 2, md: 6 },
         py: { xs: 6, md: 10 },
-        color: "#fff",
+        color: theme.palette.text.primary,
         textAlign: "center",
         overflow: "hidden",
       }}
@@ -51,7 +57,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Content */}
+      {/* Content Card */}
       <Card
         sx={{
           zIndex: 2,
@@ -70,7 +76,7 @@ export default function Hero() {
             variant="h2"
             component="h1"
             sx={{
-              color: "#fff",
+              color: theme.palette.common.white,
               mb: 2,
               animation: "fadeIn 0.8s ease-out",
             }}
@@ -81,7 +87,7 @@ export default function Hero() {
           <Typography
             variant="body1"
             sx={{
-              color: "#eaeaea",
+              color: theme.palette.grey[300],
               mb: 4,
               animation: "fadeIn 1.1s ease-out",
             }}
@@ -99,21 +105,19 @@ export default function Hero() {
               animation: "fadeIn 1.3s ease-out",
             }}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-            >
+            <Button variant="contained" color="primary" size="large" onClick={handleGetStarted}>
               Get Started
             </Button>
+
             <Button
               variant="outlined"
               color="inherit"
               size="large"
               sx={{
-                borderColor: "#fff",
+                borderColor: theme.palette.common.white,
+                color: theme.palette.common.white,
                 "&:hover": {
-                  borderColor: "#fff",
+                  borderColor: theme.palette.common.white,
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
@@ -132,7 +136,7 @@ export default function Hero() {
           position: "absolute",
           bottom: 24,
           zIndex: 2,
-          color: "#fff",
+          color: theme.palette.common.white,
           cursor: "pointer",
           animation: "bounce 1.5s infinite",
           "@keyframes bounce": {
@@ -142,7 +146,6 @@ export default function Hero() {
         }}
       />
 
-      {/* Keyframe animation */}
       <style>
         {`
           @keyframes fadeIn {
