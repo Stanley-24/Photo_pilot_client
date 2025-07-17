@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { toast } from "react-toastify";
 import apiClient from "../api/axios"; // ✅ Use custom axios instance
 
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/sidebar";
 import PhotoUploadForm from "../components/PhotoUploadForm";
 import MyGallery from "../components/MyGallery";
 import PhotoDetail from "../components/PhotoDetails";
