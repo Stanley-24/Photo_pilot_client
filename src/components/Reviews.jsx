@@ -92,7 +92,7 @@ export default function Reviews() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/v1/reviews/reviews/homepage");
+        const res = await fetch("http://127.0.0.1:8000/api/v1/reviews/homepage");
         const data = await res.json();
         if (data.length > 0) {
           setReviews([...data, ...defaultReviews]);
@@ -107,7 +107,7 @@ export default function Reviews() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/reviews/reviews/homepage", {
+      const res = await fetch("http://127.0.0.1:8000/api/v1/reviews/homepage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
