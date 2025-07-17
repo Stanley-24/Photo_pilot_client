@@ -92,7 +92,7 @@ export default function Reviews() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/v1reviews/homepage");
+        const res = await fetch("http://127.0.0.1:8000/api/v1/reviews/reviews/homepage");
         const data = await res.json();
         if (data.length > 0) {
           setReviews([...data, ...defaultReviews]);
